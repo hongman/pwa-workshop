@@ -9,8 +9,7 @@ jobs:
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v1
-    
-    steps:
+      
     - name: Login to Azure
       uses: Azure/login@v1
       with:
