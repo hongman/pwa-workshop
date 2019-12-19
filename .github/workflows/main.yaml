@@ -75,10 +75,17 @@ jobs:
       uses: Azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Access to Key Vault
+      uses: azure/get-keyvault-secrets@v1.0
+      id: keyvault_secrets
+      with:
+        keyvault: "hooongmanKeyVault01"
+        secrets: storageAccountProd
 
     - name: Publish app
       uses: Azure/cli@v1.0.0
       with:
         azcliversion: latest
         inlineScript: |
-          az storage blob upload-batch -s build -d \$web --account-name ${{ secrets.STORAGE_ACCOUNT_NAME_2 }}
+          az storage blob upload-batch -s build -d \$web --account-name ${{ steps.keyvault_secrets.outputs.storageAccountProd }}
